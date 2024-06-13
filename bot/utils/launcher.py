@@ -104,9 +104,9 @@ async def process() -> None:
                 action = int(action)
                 break
 
-    if action == 2:
+    if action == 1:
         await register_sessions()
-    elif action == 1:
+    elif action == 2:
         tg_clients = await get_tg_clients()
 
         await run_tasks(tg_clients=tg_clients)
