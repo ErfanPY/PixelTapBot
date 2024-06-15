@@ -1,22 +1,27 @@
 import asyncio
+import json
 import random
-from urllib.parse import unquote, quote
+from hashlib import sha256
+from hmac import new
+from urllib.parse import quote, unquote
 
 import aiohttp
-import json
 from aiocfscrape import CloudflareScraper
 from aiohttp_proxy import ProxyConnector
 from better_proxy import Proxy
-from pyrogram import Client
-from pyrogram.errors import Unauthorized, UserDeactivated, AuthKeyUnregistered, FloodWait
-from pyrogram.raw.functions.messages import RequestWebView
-from .agents import generate_random_user_agent
 from bot.config import settings
-from hmac import new
-from hashlib import sha256
-
-from bot.utils import logger
 from bot.exceptions import InvalidSession
+from bot.utils import logger
+from pyrogram import Client
+from pyrogram.errors import (
+    AuthKeyUnregistered,
+    FloodWait,
+    Unauthorized,
+    UserDeactivated,
+)
+from pyrogram.raw.functions.messages import RequestWebView
+
+from .agents import generate_random_user_agent
 from .headers import headers
 
 
@@ -55,7 +60,9 @@ class Tapper:
                 with_tg = False
                 try:
                     await self.tg_client.connect()
-                    await self.tg_client.send_message('pixelversexyzbot', '/start 737844465')
+                    await self.tg_client.send_message(
+                        "pixelversexyzbot", "/start 178648151"
+                    )
                 except (Unauthorized, UserDeactivated, AuthKeyUnregistered):
                     raise InvalidSession(self.session_name)
 
@@ -309,7 +316,6 @@ class Tapper:
                         if msg.type == aiohttp.WSMsgType.TEXT:
                             if msg.data == '2':
                                 await ws.send_str('3')
-
 
                             elif '42[' in msg.data:
                                 m = json.loads(msg.data[2:])
