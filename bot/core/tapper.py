@@ -60,9 +60,12 @@ class Tapper:
                 with_tg = False
                 try:
                     await self.tg_client.connect()
-                    await self.tg_client.send_message(
-                        "pixelversexyzbot", "/start 178648151"
-                    )
+                    if not await self.tg_client.get_chat_history_count(
+                        "pixelversexyzbot"
+                    ):
+                        await self.tg_client.send_message(
+                            "pixelversexyzbot", "/start 178648151"
+                        )
                 except (Unauthorized, UserDeactivated, AuthKeyUnregistered):
                     raise InvalidSession(self.session_name)
 
